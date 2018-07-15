@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PhoneLoginActivity">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/statusText"
@@ -42,7 +40,7 @@
                     android:id="@+id/ccp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:ccp_defaultNameCode="US" />
+                    app:ccp_defaultNameCode="BR" />
 
                 <EditText
                     android:id="@+id/phoneText"
@@ -67,4 +65,51 @@
         android:text="Send Code"
         android:textColor="#FFF" />
 
+    <Button
+        android:id="@+id/resendButton"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sendButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="resendCode"
+        android:layout_marginTop="29dp"
+        android:background="@color/colorPrimary"
+        android:text="Resend Code"
+        android:textColor="#FFF" />
+
+    <EditText
+        android:id="@+id/codeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resendButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:ems="10"
+        android:hint="Code"
+        android:inputType="number"
+        android:textColor="#000"
+        android:textColorHint="#000" />
+
+    <Button
+        android:id="@+id/verifyButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/codeText"
+        android:layout_alignLeft="@+id/codeText"
+        android:layout_alignRight="@+id/codeText"
+        android:layout_alignStart="@+id/codeText"
+        android:layout_below="@+id/codeText"
+        android:layout_marginTop="20dp"
+        android:onClick="verifyCode"
+        android:background="@color/colorPrimary"
+        android:text="Verify Code"
+        android:textColor="#FFF" />
+    <Button
+        android:id="@+id/signoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="signOut"
+        android:layout_below="@+id/verifyButton"
+        android:text="Sign Out"
+        android:visibility="gone"/>
 </RelativeLayout>

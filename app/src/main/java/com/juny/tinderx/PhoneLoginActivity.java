@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,8 +25,15 @@ import java.util.concurrent.TimeUnit;
 
 public class PhoneLoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "PhoneAuth";
+
     private EditText phoneText;
+    private EditText codeText;
+    private Button verifyButton;
     private Button sendButton;
+    private Button resendButton;
+    private Button signoutButton;
+    private TextView statusText;
     String number;
 
     private String phoneVerificationId;
@@ -40,11 +48,22 @@ public class PhoneLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
+
         phoneText = (EditText) findViewById(R.id.phoneText);
+        codeText = (EditText) findViewById(R.id.codeText);
+        verifyButton = (Button) findViewById(R.id.verifyButton);
         sendButton = (Button) findViewById(R.id.sendButton);
+        resendButton = (Button) findViewById(R.id.resendButton);
+        signoutButton = (Button) findViewById(R.id.signoutButton);
+        statusText = (TextView) findViewById(R.id.statusText);
 
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(phoneText);
+
+        verifyButton.setEnabled(false);
+        resendButton.setEnabled(false);
+        signoutButton.setEnabled(false);
+        statusText.setText("Signed Out");
 
         fbAuth = FirebaseAuth.getInstance();
 
@@ -73,6 +92,11 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     public void onVerificationCompleted(
                             PhoneAuthCredential credential) {
 
+                        signoutButton.setEnabled(true);
+                        statusText.setText("Signed In");
+                        resendButton.setEnabled(false);
+                        verifyButton.setEnabled(false);
+                        codeText.setText("");
                         signInWithPhoneAuthCredential(credential);
                     }
 
@@ -81,11 +105,11 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
                         if (e instanceof FirebaseAuthInvalidCredentialsException) {
                             // Invalid request
-                            Log.d("ERRO: ", "Invalid credential: "
+                            Log.d(TAG, "Invalid credential: "
                                     + e.getLocalizedMessage());
                         } else if (e instanceof FirebaseTooManyRequestsException) {
                             // SMS quota exceeded
-                            Log.d("ERRO: ", "SMS Quota exceeded.");
+                            Log.d(TAG, "SMS Quota exceeded.");
                         }
                     }
 
@@ -96,9 +120,20 @@ public class PhoneLoginActivity extends AppCompatActivity {
                         phoneVerificationId = verificationId;
                         resendToken = token;
 
+                        verifyButton.setEnabled(true);
                         sendButton.setEnabled(false);
+                        resendButton.setEnabled(true);
                     }
                 };
+    }
+
+    public void verifyCode(View view) {
+
+        String code = codeText.getText().toString();
+
+        PhoneAuthCredential credential =
+                PhoneAuthProvider.getCredential(phoneVerificationId, code);
+        signInWithPhoneAuthCredential(credential);
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
@@ -107,8 +142,18 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            signoutButton.setEnabled(true);
+                            codeText.setText("");
+                            statusText.setText("Signed In");
+                            resendButton.setEnabled(false);
+                            verifyButton.setEnabled(false);
                             FirebaseUser user = task.getResult().getUser();
                             String phoneNumber = user.getPhoneNumber();
+
+                            Intent intent = new Intent(PhoneLoginActivity.this, EmailLoginActivity.class);
+                            intent.putExtra("phone", phoneNumber);
+                            startActivity(intent);
+                            finish();
 
                         } else {
                             if (task.getException() instanceof
@@ -118,5 +163,27 @@ public class PhoneLoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void resendCode(View view) {
+
+        number = ccp.getFullNumberWithPlus();
+
+        setUpVerificatonCallbacks();
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                number,
+                60,
+                TimeUnit.SECONDS,
+                this,
+                verificationCallbacks,
+                resendToken);
+    }
+
+    public void signOut(View view) {
+        fbAuth.signOut();
+        statusText.setText("Signed Out");
+        signoutButton.setEnabled(false);
+        sendButton.setEnabled(true);
     }
 }
