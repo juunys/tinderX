@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    style="?android:attr/borderlessButtonStyle"
+
+    <corners
+        android:radius="35dp"
+        />
+    <gradient
+        android:startColor="#B86C23"
+        android:centerColor="#CE8841"
+        android:endColor="#FFD54F"
+        /> //E65100
+
+</shape>

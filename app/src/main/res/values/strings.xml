@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TinderX</string>
+    <string name="facebook_app_id">1684527991635460</string>
+    <string name="fb_login_protocol_scheme">fb1684527991635460</string>
+</resources>

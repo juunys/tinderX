@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "390861082526",
+    "firebase_url": "https://tinderx-44d60.firebaseio.com",
+    "project_id": "tinderx-44d60",
+    "storage_bucket": "tinderx-44d60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390861082526:android:5eb5448638d0883a",
+        "android_client_info": {
+          "package_name": "com.juny.tinderx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390861082526-2e8peo4lgcsm0mnpah5v3066fll38agv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.juny.tinderx",
+            "certificate_hash": "7c6ff2ad3cfbeceed918f3bd658da00547c97e05"
+          }
+        },
+        {
+          "client_id": "390861082526-0l46fepb1do826gkdkg4ufrkuk4g9hv9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH-jpN0FU-D4US7AE5zP2dzzjprjGzoBE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390861082526-0l46fepb1do826gkdkg4ufrkuk4g9hv9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
