@@ -38,13 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun condClicked(view: View) {
-
-        val intent = Intent(this, condTermsActivity::class.java)
-        startActivity(intent)
-
-    }
-
 
     fun phoneClicked(view: View) {
 
@@ -80,9 +73,6 @@ class MainActivity : AppCompatActivity() {
             })
         })
 
-        val intent = Intent(this, FbLoginActivity::class.java)
-        startActivity(intent)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -93,14 +83,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    public override fun onStart() {
+   /* public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth!!.getCurrentUser()
         if (currentUser != null) {
             updateUI()
         }
-    }
+    }*/
 
     private fun updateUI() {
 
@@ -122,6 +112,9 @@ class MainActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success")
                         val user = mAuth!!.getCurrentUser()
+
+                        val intent = Intent(this, DeckActivity::class.java)
+                        startActivity(intent)
 
                         facebookButton!!.setEnabled(true)
 

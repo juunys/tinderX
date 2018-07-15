@@ -45,7 +45,6 @@
         <activity android:name=".FbLoginActivity" />
         <activity android:name=".PhoneLoginActivity" />
         <activity android:name=".NameLoginActivity" />
-        <activity android:name=".condTermsActivity"></activity>
     </application>
 
 </manifest>
